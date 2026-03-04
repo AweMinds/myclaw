@@ -79,7 +79,7 @@ if [ -f .env ]; then
     fi
 fi
 
-echo "--- 飞书应用配置 ---"
+echo "--- 飞书应用配置(可选，直接回车跳过） ---"
 echo "请先在 https://open.feishu.cn/ 创建企业自建应用"
 echo ""
 read -p "飞书 App ID: " FEISHU_APP_ID
