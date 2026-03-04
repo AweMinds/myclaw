@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "lastTouchedVersion": "2026.3.2",
+    "lastTouchedAt": "2026-03-03T16:09:46.890Z"
+  },
+  "acp": {
+    "stream": {
+      "deliveryMode": "final_only",
+      "tagVisibility": {
+        "agent_message_chunk": true,
+        "agent_thought_chunk": true,
+        "tool_call": true,
+        "tool_call_update": true
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "yunwu": {
+        "baseUrl": "${OPENAI_BASE_URL}",
+        "apiKey": "${OPENAI_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "gpt-4.1-mini",
+            "name": "gpt-4.1-mini"
+          },
+          {
+            "id": "gpt-5-mini",
+            "name": "gpt-5-mini"
+          }
+        ]
+      },
+      "packyapi": {
+        "baseUrl": "${ANTHROPIC_BASE_URL}",
+        "apiKey": "${ANTHROPIC_API_KEY}",
+        "api": "anthropic-messages",
+        "models": [
+          {
+            "id": "claude-sonnet-4-6",
+            "name": "claude-sonnet-4-6"
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "packyapi/claude-sonnet-4-6"
+      },
+      "models": {
+        "yunwu/gpt-5-mini": {}
+      },
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "1h"
+      },
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "timeoutSeconds": 600,
+      "heartbeat": {
+        "every": "30m"
+      }
+    },
+    "list": [
+      {
+        "id": "main"
+      },
+      {
+        "id": "claude-code-agent",
+        "name": "claude-code-agent",
+        "workspace": "/home/openclaw/.openclaw/workspace-claude-code-agent",
+        "agentDir": "/home/openclaw/.openclaw/agents/claude-code-agent/agent",
+        "model": {
+          "primary": "packyapi/claude-sonnet-4-6"
+        }
+      }
+    ]
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "channels": {
+    "feishu": {
+      "appId": "${FEISHU_APP_ID}",
+      "appSecret": "${FEISHU_APP_SECRET}",
+      "enabled": true,
+      "renderMode": "card",
+      "streaming": true
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "controlUi": {
+      "dangerouslyAllowHostHeaderOriginFallback": true
+    },
+    "auth": {
+      "mode": "token"
+    }
+  },
+  "plugins": {
+    "allow": [
+      "acpx",
+      "feishu"
+    ],
+    "load": {
+      "paths": [
+        "/usr/lib/node_modules/openclaw/extensions/acpx"
+      ]
+    },
+    "entries": {
+      "feishu": {
+        "enabled": true
+      },
+      "acpx": {
+        "enabled": true,
+        "config": {
+          "permissionMode": "approve-all"
+        }
+      }
+    },
+    "installs": {
+      "acpx": {
+        "source": "path",
+        "spec": "acpx",
+        "sourcePath": "/usr/lib/node_modules/openclaw/extensions/acpx",
+        "installPath": "/usr/lib/node_modules/openclaw/extensions/acpx",
+        "installedAt": "2026-03-03T14:43:46.885Z"
+      }
+    }
+  }
+}
